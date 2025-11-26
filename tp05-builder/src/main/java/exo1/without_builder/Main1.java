@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main1 {
+	//quetion 1
     public static void main(String[] args) {
         
         // Requête 1 : GET /users?limit=10
@@ -41,4 +42,27 @@ public class Main1 {
         System.out.println(req1);
         System.out.println(req2);
     }
+	//Lisibilité faible : La suite de null, null, true, false ne veut rien dire à la lecture. Il faut constamment vérifier la signature du constructeur.
+	//Risque d'erreur élevé : Il est très facile d'inverser deux paramètres du même type sans que le compilateur ne le signale.
+
+	// Question 2
+public static HttpRequest createRequestSecurisee(String method, String url, String host, 
+                                                 String body, boolean keepAlive, boolean followRedirects) {
+    // Règle 1 : Host obligatoire
+    if (host == null || host.isEmpty()) {
+        throw new IllegalArgumentException("Le host est obligatoire");
+    }
+    
+    // Règle 2 : Pas de body en GET
+    if ("GET".equalsIgnoreCase(method) && body != null) {
+        throw new IllegalArgumentException("Une requête GET ne peut pas avoir de body");
+    }
+    
+    // Règle 3 : keepAlive et followRedirects incompatibles
+    if (keepAlive && followRedirects) {
+        throw new IllegalArgumentException("keepAlive et followRedirects sont incompatibles");
+    }
+    
+    return new HttpRequest(method, url, host, null, null, body, keepAlive, followRedirects, 5000);
+}
 }
