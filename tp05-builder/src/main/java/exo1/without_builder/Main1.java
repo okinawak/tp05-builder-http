@@ -65,4 +65,9 @@ public static HttpRequest createRequestSecurisee(String method, String url, Stri
     
     return new HttpRequest(method, url, host, null, null, body, keepAlive, followRedirects, 5000);
 }
+//Pourquoi cette approche est difficile à maintenir ?
+
+    //Découplage de la logique : La validation est séparée de l'objet. Si un autre développeur instancie HttpRequest directement via new, il contourne les règles de sécurité.
+
+    //Duplication : Si on crée des requêtes à plusieurs endroits du code, on devra copier-coller ces conditions partout.
 }
